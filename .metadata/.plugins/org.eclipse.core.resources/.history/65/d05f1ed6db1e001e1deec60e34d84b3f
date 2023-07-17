@@ -1,0 +1,10 @@
+package utilities;
+
+public class Constants {
+	 public static final String URL = "https://www.letskodeit.com/courses/test-automation-bundle?coupon=TABFROMHOME";
+     public static final String File_Path = "C:\\Users\\lenovo\\eclipse-workspace\\New WorkSpace\\DataDrivenTesting\\src\\test\\resources";
+     public static final String File_Name = "WriteData.xlsx";
+     
+}
+
+

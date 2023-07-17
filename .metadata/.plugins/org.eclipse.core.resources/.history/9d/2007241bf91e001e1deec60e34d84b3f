@@ -1,0 +1,58 @@
+package dataDrivenTest;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+public class DataDrivenTest {
+	WebDriver driver;
+	
+    @BeforeClass
+    public void setup()
+    {
+    	driver=new ChromeDriver();
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    	driver.manage().window().maximize();
+    	
+    }
+    @Test(dataProvider="LoginData")
+    public void loginTest(String user,String pwd,String exp) 
+    {
+    	driver.get("https://admin-demo.nopcommerce.com/login?ReturnUrl=%2Fadmin%2F");
+    	WebElement txtEmail=driver.findElement(By.id("Email"));
+    	txtEmail.clear();
+    	txtEmail.sendKeys(user);
+    	
+    	WebElement txtpassword=driver.findElement(By.id("Password"));
+    	txtpassword.clear();
+    	txtpassword.sendKeys(pwd);
+    	
+    	
+    	driver.findElement(By.xpath("//button[normalize-space()='Log in']"));
+    	
+    }
+    @DataProvider(name="LoginData")
+    public String[][] getData()
+    {
+    	String loginData[][]= {
+    			{"admin@yourstore.com","admin","Valid"},
+    			{"admin@yourstore.com","adm","Invalid"},
+    			{"adm@yourstore.com","adm","Invalid"}
+    			
+    	
+    };
+    	return loginData;
+    }
+    @AfterClass
+    void tearDown() {
+    	driver.close();
+    }
+    
+}

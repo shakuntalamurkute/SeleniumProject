@@ -1,0 +1,83 @@
+package LoginTest1;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.LoginPage;
+import pages.SignoutPage;
+import pages.SignupPage;
+
+public class LoginTest {
+
+	private WebDriver driver;
+
+	@BeforeClass
+	public void setup() {
+		// Set up the WebDriver
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+	}
+
+	@Test(priority = 1)
+	public void signUpTest() throws InterruptedException {
+		driver.get("https://letcode.in/signup");
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signUp("shreerr", "sherrrr510a@gmail.com", "Shre@123");
+
+		By newCourseBtn = By.xpath("//a[text()='New Course!']");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(newCourseBtn));
+
+		String actualUrl = driver.getCurrentUrl();
+		String expectedUrl = "https://letcode.in/";
+
+		Assert.assertEquals(actualUrl, expectedUrl);
+	}
+
+	@Test(priority = 3)
+	public void signInTest() throws InterruptedException {
+		driver.navigate().to("https://letcode.in/");
+
+		LoginPage loginpage = new LoginPage(driver);
+		loginpage.signIn("sharr510@gmail.com", "Shre@123");
+
+		By newCourseBtn = By.xpath("//a[text()='New Course!']");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(newCourseBtn));
+
+		String actualUrl = driver.getCurrentUrl();
+		String expectedUrl = "https://letcode.in/";
+
+		Assert.assertEquals(actualUrl, expectedUrl);
+	}
+
+	@Test(priority = 2)
+	public void signOutTest() throws InterruptedException {
+		driver.navigate().to("https://letcode.in/");
+
+		SignoutPage signout = new SignoutPage(driver);
+		//signout.signout();
+
+		String actualUrl = driver.getCurrentUrl();
+		String expectedUrl = "https://letcode.in/";
+
+		Assert.assertEquals(actualUrl, expectedUrl);
+	}
+
+	@AfterClass
+	public void teardown() {
+		driver.quit();
+	}
+}

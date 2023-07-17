@@ -1,0 +1,8 @@
+package Pagess;
+
+import org.openqa.selenium.By;
+
+public class CustomDropDown {
+	static By workplace 		= By.xpath("//a[@href='/test']");
+
+}

@@ -1,0 +1,92 @@
+package automation;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.LoginPage;
+import selenium.Inputedit;
+
+public class InputTest {
+	WebDriver driver;
+	Inputedit inputEdit;
+
+	@BeforeClass
+	public void setup() {
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		inputEdit = new Inputedit(driver);
+		driver.navigate().to("https://letcode.in/signin");
+	}
+
+	@Test(priority =-1)
+	public void login() {
+		LoginPage loginpage = new LoginPage(driver);
+		loginpage.signIn("shakuntalamurkute510@gmail.com", "Shanu@123");
+
+		By newCourseBtn = By.xpath("//a[text()='New Course!']");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(newCourseBtn));
+
+		String actualUrl = driver.getCurrentUrl();
+		String expectedUrl = "https://letcode.in/";
+		Assert.assertEquals(actualUrl, expectedUrl);
+	}
+
+	@Test(priority=1,dependsOnMethods = "login")
+	public void testFullNameInput() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		Inputedit.fullName("John Doe");
+
+		String fullNameValue = driver.findElement(Inputedit.name).getAttribute("value");
+		Assert.assertEquals(fullNameValue, "John Doe");
+	}
+
+	@Test(dependsOnMethods = "login")
+	public void testPressInput() {
+		Inputedit.clickWorkspaceLink();
+
+		Inputedit.clickInput();
+		Inputedit.clickInput();
+		Inputedit.appendText("i am Good");
+
+		String pressInput = driver.findElement(Inputedit.append).getAttribute("value");
+		Assert.assertEquals(pressInput, "i am Good");
+	}
+
+	@Test(dependsOnMethods = "login")
+	public void testBox() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		Inputedit.insideBox("ortonikc");
+
+		String boxInput = driver.findElement(Inputedit.insideText).getAttribute("value");
+		Assert.assertEquals(boxInput, "ortonikc");
+	}
+
+	@Test(dependsOnMethods = "login")
+	public void clearText() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		Inputedit.clear("Koushik Chatterjee");
+
+		String textInput = driver.findElement(Inputedit.insideText).getAttribute("value");
+		Assert.assertEquals(textInput, "");
+	}
+
+	@AfterClass
+	public void tearDown() {
+		driver.quit();
+	}
+}

@@ -1,0 +1,8 @@
+package utilities;
+
+public class Constantss {
+	public static final String URL = "http://letskodeit.com";
+    public static final String File_Path = "src/test/resources/ReadData1.xlsx";
+    public static final String File_Name = "ReadData1.xlsx";
+}
+

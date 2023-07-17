@@ -1,0 +1,36 @@
+package fileUplodWindow;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class FileUplod {
+    private WebDriver driver;
+    private String baseUrl;
+
+    @BeforeClass
+    public void SetUp() throws MalformedURLException {
+        baseUrl = "https://demoqa.com/upload-download";
+        driver = new ChromeDriver();
+
+        // Maximize the browser's window
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+        driver.get(baseUrl);
+    }
+
+    
+}

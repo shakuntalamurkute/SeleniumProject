@@ -1,0 +1,21 @@
+package writeDataUtility;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class WebTablewriteData {
+	public static void main(String[]args)
+	{
+		WebDriver driver=new ChromeDriver();
+		  
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		 
+		driver.get("https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population");
+		
+		String path=".\\datafiles\\population.xlsx";
+	}
+	
+
+}

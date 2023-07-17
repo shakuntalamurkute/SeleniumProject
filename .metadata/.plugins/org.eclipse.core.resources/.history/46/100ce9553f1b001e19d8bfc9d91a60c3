@@ -1,0 +1,5 @@
+package testngtitorials;
+
+public class TestNG_ScreenshotOnFailure {
+
+}

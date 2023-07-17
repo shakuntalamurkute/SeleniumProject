@@ -1,0 +1,58 @@
+package BasicProgram;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class RadioButtonsAndCheckBoxes {
+	WebDriver driver;
+	String baseUrl;
+
+	@BeforeClass
+	public void setUp() throws Exception {
+		driver = new FirefoxDriver();
+		baseUrl = "https://www.letskodeit.com/practice";
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+		driver.manage().window().maximize();
+		driver.get(baseUrl);
+	}
+	
+	@Test
+	public void test() throws InterruptedException {
+		WebElement bmwRadioBtn = driver.findElement(By.id("bmwradio"));
+		bmwRadioBtn.click();
+		
+		
+		WebElement benzRadioBtn = driver.findElement(By.id("benzradio"));
+		benzRadioBtn.click();
+		
+		
+		WebElement bmwCheckBox = driver.findElement(By.id("bmwcheck"));
+		bmwCheckBox.click();
+		
+		
+		WebElement benzCheckBox = driver.findElement(By.id("benzcheck"));
+		benzCheckBox.click();
+		
+		System.out.println("BMW Radio Button is selected? " + bmwRadioBtn.isSelected());
+		System.out.println("Benz Radio Button is selected? " + benzRadioBtn.isSelected());
+		System.out.println("BMW Checkbox is selected? " + bmwCheckBox.isSelected());
+		System.out.println("Benz Checkbox is selected? " + benzCheckBox.isSelected());
+	}
+
+
+	@AfterClass
+	public void tearDown() throws Exception {
+		
+		//driver.quit();
+	}
+}
+
+

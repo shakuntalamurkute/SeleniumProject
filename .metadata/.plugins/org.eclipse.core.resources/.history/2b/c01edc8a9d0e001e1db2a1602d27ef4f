@@ -1,0 +1,127 @@
+package automation;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.LoginPage;
+import selenium.Inputedit;
+
+public class InputTest {
+	WebDriver driver;
+	Inputedit inputEdit;
+
+	@BeforeClass
+	public void setup() {
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.navigate().to("https://letcode.in/signin");
+		inputEdit = new Inputedit(driver);
+	}
+
+	@Test(priority = 0, groups = "sanity")
+	public void login() {
+		LoginPage loginpage = new LoginPage(driver);
+		loginpage.signIn("shakuntalamurkute510@gmail.com", "Shanu@123");
+
+		By newCourseBtn = By.xpath("//a[text()='New Course!']");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(newCourseBtn));
+
+		String actualUrl = driver.getCurrentUrl();
+		String expectedUrl = "https://letcode.in/";
+		Assert.assertEquals(actualUrl, expectedUrl);
+	}
+
+	@Test(priority = 1, groups = "regression")
+	public void testEnterFullName() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		String fullName = "Koushik Chatterjee";
+		String enteredFullName = inputEdit.enterFullName(fullName);
+
+		Assert.assertEquals(enteredFullName, fullName, "Full name input value mismatch");
+	}
+
+	@Test(priority = 2, groups = "regression")
+	public void testEnterJoin() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		String expectedValue = "person";
+		Inputedit.enterJoin(expectedValue);
+
+		String actualValue = driver.findElement(Inputedit.getJoinInput()).getAttribute("value").trim();
+
+		// Assert that the actual value contains the expected value
+		Assert.assertTrue(actualValue.contains(expectedValue), "Join input value mismatch");
+	}
+
+	@Test(priority = 2, groups = "regression")
+	public void testGetMeValue1() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+
+		String expectedValue = "ortonikc";
+
+		String actualValue = Inputedit.insideTextValue();
+
+		Assert.assertEquals(actualValue, expectedValue, "GetMe value mismatch");
+
+		System.out.println(expectedValue);
+
+	}
+
+	@Test
+	public void clearText() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		String initialValue = "Koushik Chatterjee";
+
+		// Set the initial value for the text field
+		driver.findElement(Inputedit.getClearMeButton1()).sendKeys(initialValue);
+
+		// Clear the text field
+		Inputedit.clearMe();
+
+		// Retrieve the cleared value from the text field
+		String clearedValue = driver.findElement(Inputedit.getClearMeButton1()).getAttribute("value");
+
+		// Assert that the cleared value is empty
+		Assert.assertEquals(clearedValue, "", "Text field not cleared successfully");
+
+	}
+
+	@Test
+	public void textDisableField() {
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		boolean isNoEditEnabled = inputEdit.isNoEditEnabled();
+
+		// Assert that the "noEdit" field is disabled
+		Assert.assertFalse(isNoEditEnabled, "noEdit field should be disabled");
+		System.out.println(isNoEditEnabled);
+
+	}
+
+	@Test
+	public void conformText() {
+		Inputedit inputEdit = new Inputedit(driver);
+		Inputedit.clickWorkspaceLink();
+		Inputedit.clickInput();
+		String isReadOnly = Inputedit.getDontWriteValue();
+		System.out.println(isReadOnly);
+		Assert.assertEquals(isReadOnly, "This text is readonly");
+
+	}
+
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="6" total="7" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-06-21T14:55:36 IST" name="Default suite" finished-at="2023-06-21T14:55:42 IST" duration-ms="6375">
+    <groups>
+      <group name="sanity: regression: Verify that the &quot;Get Me&quot; value is retrieved successfully">
+        <method signature="InputTest.testGetMeValue1()[pri:4, instance:automation.InputTest@2034b64c]" name="testGetMeValue1" class="automation.InputTest"/>
+      </group> <!-- sanity: regression: Verify that the "Get Me" value is retrieved successfully -->
+    </groups>
+    <test started-at="2023-06-21T14:55:36 IST" name="Default test" finished-at="2023-06-21T14:55:42 IST" duration-ms="6375">
+      <class name="automation.InputTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:automation.InputTest@2034b64c]" started-at="2023-06-21T14:55:36 IST" name="setup" finished-at="2023-06-21T14:55:42 IST" duration-ms="5683" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="testGetMeValue1()[pri:4, instance:automation.InputTest@2034b64c]" started-at="2023-06-21T14:55:42 IST" name="testGetMeValue1" finished-at="2023-06-21T14:55:42 IST" duration-ms="321" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMeValue1 -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:automation.InputTest@2034b64c]" started-at="2023-06-21T14:55:42 IST" name="tearDown" finished-at="2023-06-21T14:55:42 IST" duration-ms="331" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- automation.InputTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

@@ -1,0 +1,44 @@
+package excelReadingFile;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import utilities.Constants;
+import utilities.ExcelUtility_SingleDataSet;
+
+public class UsingExcel_SingleDataSet {
+    private WebDriver driver;
+
+    @BeforeClass
+    public void setUp() throws Exception {
+        driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get(Constants.URL);
+        driver.findElement(By.linkText("Start Learning")).click();
+        ExcelUtility_SingleDataSet.setExcelFile(Constants.File_Path, "Sheet1");
+    }
+
+    @Test
+    public void testUsingExcel() throws Exception {
+        String username = ExcelUtility_SingleDataSet.getCellData(1, 0);
+        String password = ExcelUtility_SingleDataSet.getCellData(1, 1);
+        driver.findElement(By.linkText("Sign In")).click();
+        driver.findElement(By.id("email")).sendKeys(username);
+        driver.findElement(By.id("login-password")).sendKeys(password);
+        driver.findElement(By.id("login")).click();
+        Thread.sleep(2000);
+        boolean result = driver.findElements(By.xpath("//form[@id='new_user']//div[3]")).size() != 0;
+        Assert.assertTrue(result);
+        ExcelUtility_SingleDataSet.setCellData("Pass", 1, 2, Constants.File_Path);
+    }
+
+    @AfterClass
+    public void tearDown() {
+        driver.quit();
+    }
+}

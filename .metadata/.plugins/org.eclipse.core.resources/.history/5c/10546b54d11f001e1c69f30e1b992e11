@@ -1,0 +1,67 @@
+package fileUplodWindow;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class FileUplod {
+    private WebDriver driver;
+    private String baseUrl;
+
+    @BeforeClass
+    public void SetUp() throws MalformedURLException {
+        baseUrl = "https://demoqa.com/upload-download";
+        driver = new ChromeDriver();
+
+        // Maximize the browser's window
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+        driver.get(baseUrl);
+    }
+
+    @Test
+    public void fileUploadWebsite() throws AWTException, InterruptedException {
+        String filePath = "C:\\Users\\lenovo\\Desktop\\TestFile.txt";
+
+        WebElement uploadButton = driver.findElement(By.id("uploadFile"));
+
+        // Click on the upload button using JavaScript executor
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", uploadButton);
+
+        // Delay to allow the file upload dialog to open
+        Thread.sleep(2000);
+
+        // Use Robot class to handle file upload dialog
+        Robot robot = new Robot();
+
+        // Set the file path in the clipboard
+        StringSelection stringSelection = new StringSelection(filePath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+
+        // Perform Ctrl+V to paste the file path
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+
+        // Perform Enter to confirm file upload
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+
+        // Perform any additional actions after file upload
+    }
+}

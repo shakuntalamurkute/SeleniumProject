@@ -1,0 +1,75 @@
+package fileUplodWindow;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class FileUploadAutoIt {
+	private WebDriver driver;
+	private String baseUrl;
+
+	@BeforeClass
+	public void beforeClass() throws MalformedURLException {
+		baseUrl = "https://www.gmail.com/";
+		driver = new ChromeDriver();
+		;
+
+		// Maximize the browser's window
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get(baseUrl);
+	}
+
+	@Test
+	public void fileUpload() throws AWTException, InterruptedException {
+		driver.findElement(By.id("identifierId")).sendKeys("shakuntala.murkute@vshsolutions.com");
+
+		driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/div[1]")).click();
+
+		//driver.findElement(By.xpath("//*[@id=\"password\"]/div[1]/div/div[1]/input")).sendKeys("Shanu@123");
+
+		driver.findElement(By.cssSelector("#passwordNext > div > button > span")).click();
+
+		driver.findElement(By.xpath("//div[contains(text(),'Compose')]")).click();
+
+		driver.findElement(By.xpath("//div[@aria-label='Search Field']/div/input"))
+				.sendKeys("sonalmurkute1998@gmail.com");
+
+		driver.findElement(By.xpath("//input[@name='subjectbox']")).sendKeys("Test File Upload");
+
+		WebElement fileInput = driver.findElement(By.xpath("//div[@class='a1 aaA aMZ']"));
+		fileInput.click();
+
+		StringSelection ss = new StringSelection("C:\\Users\\lenovo\\Desktop\\TestFile.txt");// copy the path
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+
+		// Ctrl + v
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_CONTROL);// press control key
+		robot.keyPress(KeyEvent.VK_V);// press on control key
+
+		robot.keyRelease(KeyEvent.VK_CONTROL);// relesed
+		robot.keyRelease(KeyEvent.VK_V);
+
+		robot.keyPress(KeyEvent.VK_ENTER);// press
+		robot.keyRelease(KeyEvent.VK_ENTER);// releesd
+
+	}
+
+	@AfterClass
+	public void afterClass() {
+	}
+
+}

@@ -1,0 +1,3 @@
+17:23:07.858 DEBUG demo.LoggingConsole -Debug Message Logged
+17:23:07.859 ERROR demo.LoggingConsole -Error Message Logged
+17:23:07.859 FATAL demo.LoggingConsole -Fatal Message Logged

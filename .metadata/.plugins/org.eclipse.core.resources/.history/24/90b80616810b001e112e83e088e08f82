@@ -1,0 +1,66 @@
+package Pagess;
+
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+public class CustomDropDown {
+	static WebDriver driver;
+	static By workplace = By.xpath("//a[@href='/test']");
+	static By selectDropDown = By.xpath("//a[@href='/dropdowns']");
+	static By selectfruit = By.id("fruits");
+	static By superHerosDropdown = By.id("superheros");
+	static By languageDropdown = By.id("lang");
+	static By countryDropdown=By.id("country");
+	public CustomDropDown(WebDriver driver) {
+		CustomDropDown.driver = driver;
+	}
+
+	public static void clickWorkspaceLink() {
+		driver.findElement(workplace).click();
+	}
+
+	public static void clickDropdown() {
+		driver.findElement(selectDropDown).click();
+
+	}
+
+	public static String clickselectFruits(String fruit) {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12));
+		WebElement fruitsDropdownElement = driver.findElement(selectfruit);
+		Select fruitsSelect = new Select(fruitsDropdownElement);
+		fruitsSelect.selectByVisibleText(fruit);
+		return fruit;
+
+	}
+
+	public static String clickSelectedOptions(String text) {
+
+		Select heroSelect = new Select(driver.findElement(superHerosDropdown));
+		boolean multiple = heroSelect.isMultiple();
+		System.out.println(multiple);
+		heroSelect.selectByVisibleText(text);
+		return text;
+
+	}
+
+	public static String clickLanguage(String languageOption) {
+
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12));
+		Select languageSelect = new Select(driver.findElement(languageDropdown));
+		languageSelect.selectByVisibleText(languageOption);
+		return languageOption;
+
+	}
+	public static String clickCountry(String countryOption) {
+
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12));
+		Select countrySelect = new Select(driver.findElement(countryDropdown));
+		countrySelect.selectByVisibleText(countryOption);
+		return countryOption;
+}
+}

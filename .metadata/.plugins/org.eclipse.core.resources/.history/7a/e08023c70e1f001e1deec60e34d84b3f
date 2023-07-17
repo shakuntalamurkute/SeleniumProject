@@ -1,0 +1,33 @@
+package wrieData;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class WriteDataUsingExcel {
+	public static void main(String[]args)
+	{
+		XSSFWorkbook workbook=new XSSFWorkbook();
+		XSSFSheet sheet=workbook.createSheet("Emp Info");
+		 
+		
+		Object empdata[][]= {
+				{"EmpId","Name","Job"},
+				{101,"David","Engineer"},
+				{102,"smith","Civil"},
+				{103,"Ganesh","IT"},
+				{104,"Mahi","Comp"},
+				{105,"Rahul","Chemical"},
+				{106,"Shanu","Entc"}
+					
+				
+		};
+		int rows=empdata.length;
+		int cols=empdata[0].length;
+		System.out.println(rows);
+		
+		
+		
+		
+	}
+
+}

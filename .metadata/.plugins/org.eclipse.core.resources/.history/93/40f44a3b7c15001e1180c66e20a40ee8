@@ -1,0 +1,37 @@
+package BasicProgram;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class DatePicker {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        ChromeDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://jqueryui.com/datepicker/");
+        driver.manage().window().maximize();
+        String year = "2024";
+        String month = "January";
+        String date = "10";
+        driver.switchTo().frame(driver.findElement(By.cssSelector(".demo-frame")));
+        driver.findElement(By.id("datepicker")).click();
+        while (true) {
+            String monthyear = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
+            String arr[] = monthyear.split(" ");
+            String mon = arr[0];
+            String yr = arr[1];
+
+            if (mon.equalsIgnoreCase(month) && yr.equals(year)) {
+                break;
+            } else if (year.compareTo(yr) > 0 || (year.equals(yr) && month.compareTo(mon) > 0)) {
+                driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+            } else {
+                driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+            }
+        }
+        driver.findElement(By.linkText(date)).click();
+    }
+}

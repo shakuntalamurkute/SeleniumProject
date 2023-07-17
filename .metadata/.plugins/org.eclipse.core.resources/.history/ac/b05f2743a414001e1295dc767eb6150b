@@ -1,0 +1,35 @@
+package BasicProgram;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class DatePicker {
+	public static void main(String[] args) throws InterruptedException {
+		ChromeDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://jqueryui.com/datepicker/");
+		driver.manage().window().maximize();
+		String year = "2023";
+		String month = "july";
+		String date = "10";
+		driver.switchTo().frame(driver.findElement(By.cssSelector(".demo-frame")));
+		driver.findElement(By.xpath("//*[@id=\"datepicker\"]")).click();
+
+		while (true) {
+			String monthyear = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
+			String arr[] = monthyear.split("");
+			String mon = arr[0];
+			String yr = arr[1];
+
+			if (mon.equalsIgnoreCase(month) && yr.equals(year)) {
+				break;
+			} else {
+				driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+			}
+		}
+
+	}
+}

@@ -1,0 +1,10 @@
+package BasicProgram;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Sortable {
+
+
+    ChromeDriver driver = new ChromeDriver();
+    driver.manage().window().maximize();
+}

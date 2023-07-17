@@ -1,0 +1,37 @@
+package writeDataUtility;
+
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class WebTablewriteData {
+	public static void main(String[] args) throws IOException {
+		WebDriver driver = new ChromeDriver();
+
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+		driver.get("https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population");
+
+		String path = ".\\datafiles\\population.xlsx";
+		XLUtility xlutil = new XLUtility(path);
+
+		xlutil.setCellData("Sheet1", 0, 0, "Country");
+		xlutil.setCellData("Sheet1", 0, 1, "Population");
+		xlutil.setCellData("Sheet1", 0, 2, "% of world");
+		xlutil.setCellData("Sheet1", 0, 3, "Date");
+		xlutil.setCellData("Sheet1", 0, 4, "Source");
+
+		// capture table rows
+
+		WebElement table = driver
+				.findElement(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']/tbody"));
+		int rows = table.findElements(By.xpath("tr")).size();
+
+	}
+
+}
